@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>gussing a number</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <main class="main-content jumbotron jumbotron-fluid mb-0 d-flex">
+    <div class="container text-center m-auto">
+      <h1 class="display-1">Guess me!</h1>
+      <p class="lead">I'm thinking of a number between 1 and 10, can you guess it?</p>
+
+      <a class="btn btn-primary btn-lg" href="#" role="button" id="play" onclick="guessingGame()">Play!</a>
+    </div>
+  </main>
+  <script>
+    console.clear();
+
+    function getRandomIntInclusive(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive
+    }
+
+    function guessingGame() {
+      // Create a number to guess between 0 and 10
+      let numberToGuess = getRandomIntInclusive(0, 10);
+
+      // Initialize a counter
+      let count = 1;
+
+      // Make your fist guess
+      let guess = parseInt(prompt("Guess a number between 1 - 10: (You have 3 attempts)"));
+
+      // As long as the guess is incorrect or you have tried to guess less than 3 times, try to guess again
+      while (guess !== numberToGuess && count < 3) {
+        if (isNaN(guess)) {
+          guess = parseInt(prompt("What the hell do you think you're doing?!?!!! I asked for a number!"));
+        } else {
+          // Try to guess a number
+          guess = parseInt(prompt(`Wrong!!! Try Again! You have ${3 - count} attempts left`));
+          // Count the guess
+          count++;
+        }
+      }
+
+      // If you guessed within 3 attempts...
+      if (guess === numberToGuess && count < 3) {
+        // ... print the success message
+        alert(`Success: the number is indeed ${numberToGuess}. You got the number correctly after ${count} attempts.`);
+      } else {
+        // Otherwise print that the game is over
+        alert(`Sorry human, but you couldn't guess the number in less than three times. The number was ${numberToGuess}`);
+      }
+    }
+
+    // This is the better way to do it, however it's still not the most ideal way, I'll explain after the vacation.
+    // document.getElementById('play').onclick = guessingGame
+  </script>
+
+</body>
+
+</html>
